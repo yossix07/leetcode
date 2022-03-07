@@ -25,17 +25,19 @@ public:
             temp += l1->val;
             l1 = l1->next;
         }
-           
+        
         if(l2){
             temp += l2->val;
             l2 = l2->next;
         }
+        
         if(temp >= 10) {
             carry = 1;
             temp %= 10;
         } else {
             carry = 0;
         }
+        
         current->val = temp;
         current->next = nullptr;
         
@@ -49,6 +51,6 @@ public:
 };
 
 int main() {
-    // can add a test
+    // can add a test and delete retured list
     return 0;
 }
