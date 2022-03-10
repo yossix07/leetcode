@@ -1,0 +1,53 @@
+struct ListNode {
+     int val;
+     ListNode *next;
+     ListNode() : val(0), next(nullptr) {}
+     ListNode(int x) : val(x), next(nullptr) {}
+     ListNode(int x, ListNode *next) : val(x), next(next) {}
+     ~ListNode() {
+         delete this->next;
+     }
+};
+
+/*
+ * Given the head of a linked list, remove the n-th node from the end of the list and return its head.
+ */
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        int size = 0;
+        ListNode* current = head;
+        while(current != nullptr) {
+            current = current->next;
+            size++;
+        }
+        int fromStart = size - n;
+
+        if(fromStart == 0){
+            ListNode* temp = head;
+            ListNode* ret = head -> next;
+            temp->next = nullptr;
+            delete temp;
+            return ret;
+        }
+        current = head;
+        for(int i = 0; i < fromStart - 1; i++){
+            current=current->next;
+        }
+        if(current->next != nullptr){
+            ListNode* temp = current -> next;
+            temp->next = nullptr;
+            delete temp;
+            current -> next = current->next->next;
+        }
+        else
+            return nullptr;
+        return head;
+    }
+};
+int main(){
+    Solution s = Solution();
+    auto* a = new ListNode(1,new ListNode(2));
+    s.removeNthFromEnd(a,2);
+    delete a;
+}
