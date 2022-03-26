@@ -1,0 +1,32 @@
+package com.company;
+
+/*
+* Given an array of integers nums which is sorted in ascending order, 
+* and an integer target, write a function to search target in nums.
+* If target exists, then return its index. Otherwise, return -1.
+* You must write an algorithm with O(log n) runtime complexity.
+ */
+public class Main {
+    public static int search(int[] nums, int target) {
+        return recursiveSearch(nums, target, 0, nums.length - 1);
+    }
+
+    public static int recursiveSearch(int[] nums, int target,int i, int j) {
+        if(i <= j){
+            int m = (i + j)/2;
+            if(nums[m] == target)
+                return m;
+
+            if(nums[m] < target)
+                return recursiveSearch(nums, target, m + 1, j);
+
+            return recursiveSearch(nums, target, i, m - 1);
+
+        }
+        return -1;
+    }
+    public static void main(String[] args) {
+        int array[] = {-1,0,3,5,9,12};
+        System.out.println(search(array,2));
+    }
+}
