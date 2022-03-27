@@ -1,0 +1,36 @@
+#include <iostream>
+#include "vector"
+
+using namespace std;
+
+/*
+* Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.
+*/
+class Solution {
+    vector<vector<int>> v;
+public:
+     vector<vector<int>> permute(vector<int>& nums) {
+         this->recursive(nums,0);
+         return this->v;
+    }
+
+    void recursive(vector<int>& nums, int index){
+        if (nums.size() == index){
+            this->v.push_back(nums);
+            return;
+        }
+
+        for (int i = index; i < nums.size(); ++i) {
+            swap(nums[i],nums[index]);
+            recursive(nums,index+1);
+            swap(nums[i],nums[index]);
+        }
+    }
+};
+
+int main() {
+    vector<int> a = {1,2,3};
+    Solution b = Solution();
+    b.permute(a);
+    return 0;
+}
