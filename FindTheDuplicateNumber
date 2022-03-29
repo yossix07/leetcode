@@ -1,0 +1,25 @@
+/*
+* Given an array of integers nums containing n + 1 integers where each integer is in the range [1, n] inclusive.
+* There is only one repeated number in nums, return this repeated number.
+* You must solve the problem without modifying the array nums and uses only constant extra space.
+*/
+int findDuplicate(int* nums, int numsSize){
+    int slow = nums[0];
+    int fast = nums[nums[0]];
+    
+    while(slow != fast){
+        slow = nums[slow];
+        fast = nums[nums[fast]];
+    }
+    
+    int newSlow = 0;
+    while(newSlow != slow){
+        slow = nums[slow];
+        newSlow = nums[newSlow];
+    }
+    return slow;
+}
+
+int main() {
+  
+}
