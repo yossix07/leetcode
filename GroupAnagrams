@@ -1,0 +1,21 @@
+"""
+Given an array of strings strs, group the anagrams together. You can return the answer in any order.
+An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase,
+typically using all the original letters exactly once.
+"""
+def groupAnagrams(strs):
+    l = dict()
+    for string in strs:
+        k = sorted(string)
+        kString = " "
+        for c in k:
+            kString += c
+        if kString in l:
+            l.get(kString).append(string)
+        else:
+            l[kString] = [string]
+    return l.values()
+
+
+if __name__ == '__main__':
+    groupAnagrams(["eat","tea","tan","ate","nat","bat"])
