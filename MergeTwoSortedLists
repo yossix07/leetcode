@@ -1,0 +1,68 @@
+#include <iostream>
+
+struct ListNode {
+     int val;
+     ListNode *next;
+     ListNode() : val(0), next(nullptr) {}
+     ListNode(int x) : val(x), next(nullptr) {}
+     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ };
+
+/*
+ * You are given the heads of two sorted linked lists list1 and list2.
+ * Merge the two lists in a one sorted list. The list should be made by splicing together the nodes of the first two lists.
+ * Return the head of the merged linked list.
+ */
+class Solution {
+public:
+    static ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+
+        if(!list1)
+            return list2;
+
+        if(!list2)
+            return list1;
+
+        auto* newHead = new ListNode(0);
+        ListNode* current1 = list1;
+        ListNode* current2 = list2;
+        ListNode* currentHead = newHead;
+
+        while(current1 && current2) {
+            if(current1->val <= current2->val) {
+                currentHead->next = current1;
+                current1 = current1->next;
+            } else {
+                currentHead->next = current2;
+                current2 = current2->next;
+            }
+            currentHead = currentHead->next;
+        }
+
+        while(current1) {
+            currentHead->next = current1;
+            current1 = current1->next;
+            currentHead = currentHead->next;
+        }
+
+        while(current2) {
+            currentHead->next = current2;
+            current2 = current2->next;
+            currentHead = currentHead->next;
+        }
+
+        ListNode* ret = newHead->next;
+        delete newHead;
+        return ret;
+    }
+};
+
+int main() {
+
+    auto* l1 = new ListNode(1,new ListNode(2, new ListNode(4)));
+    auto* l2 = new ListNode(1,new ListNode(3, new ListNode(4)));
+
+    Solution::mergeTwoLists(l1,l2);
+
+    return 0;
+}
