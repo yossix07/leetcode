@@ -1,0 +1,83 @@
+# Definition for a binary tree node.
+class TreeNode(object):
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+# We run a preorder depth-first search (DFS) on the root of a binary tree.
+# 
+# At each node in this traversal, we output D dashes (where D is the depth of this node),
+# then we output the value of this node. 
+# If the depth of a node is D, the depth of its immediate child is D + 1.  The depth of the root node is 0.
+# 
+# If a node has only one child, that child is guaranteed to be the left child.
+# 
+# Given the output traversal of this traversal, recover the tree and return its root.
+class Solution(object):
+    def recoverFromPreorder(self, traversal):
+        """
+        :type traversal: str
+        :rtype: TreeNode
+        """
+        nodes = []
+        levels = []
+        num = ""
+        num = num + traversal[0]
+        i = 1
+        while (i < (len(traversal))) and traversal[i] != "-":
+            num = num + traversal[i]
+            i = i + 1
+            continue
+        root = TreeNode(int(num))
+        nodes.append(root)
+        levels.append(0)
+        num = ""
+        dashCount = 0
+
+        while i < len(traversal):
+            c = traversal[i]
+            if c == '-':
+                dashCount = dashCount + 1
+                i = i + 1
+                continue
+
+            while dashCount <= levels[-1]:
+                if len(nodes) > 0:
+                    nodes.pop()
+                    levels.pop()
+
+            num = num + c
+            while (i < (len(traversal) - 1)) and traversal[i + 1] != "-":
+                num = num + c
+                i = i + 1
+                continue
+
+            current = TreeNode(int(num))
+            if dashCount == 0:
+                nodes.append(current)
+                levels.append(dashCount)
+                num = ""
+                dashCount = 0
+                i = i + 1
+                continue
+
+            if dashCount == (levels[-1] + 1):
+                if nodes[-1].left is None:
+                    nodes[-1].left = current
+                else:
+                    nodes[-1].right = current
+
+                nodes.append(current)
+                levels.append(dashCount)
+                dashCount = 0
+                num = ""
+                i = i + 1
+
+        return root
+
+
+if __name__ == '__main__':
+    s = Solution()
+    print(s.recoverFromPreorder("10-7--8"))
