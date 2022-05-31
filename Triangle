@@ -1,0 +1,30 @@
+# Given a triangle array, return the minimum path sum from top to bottom.
+# For each step, you may move to an adjacent number of the row below. 
+# More formally, if you are on index i on the current row,
+# you may move to either index i or index i + 1 on the next row.
+class Solution(object):
+    def minimumTotal(self, triangle):
+        maxRow = len(triangle) - 1
+        dynamic = []
+        lastRow = (triangle[-1])[:]
+        
+        dynamic.append(lastRow)
+        
+        col = len(triangle[maxRow]) - 1
+        for i in range(maxRow, 0, -1):
+            sumLine = []
+            
+            prevSumLine = dynamic[-1]
+            originalLine = triangle[i - 1]
+            
+            print(prevSumLine)
+            for j in range(col):
+                if prevSumLine[j] <= prevSumLine[j + 1]:
+                    sumLine.append(originalLine[j] + prevSumLine[j])
+                else:
+                    sumLine.append(originalLine[j] + prevSumLine[j + 1])
+                
+            col -= 1
+            dynamic.append(sumLine)
+        
+        return dynamic[-1][0]
