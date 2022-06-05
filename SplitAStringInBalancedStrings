@@ -1,0 +1,25 @@
+# Balanced strings are those that have an equal quantity of 'L' and 'R' characters.
+# Given a balanced string s, split it in the maximum amount of balanced strings.
+# Return the maximum amount of split balanced strings.
+class Solution(object):
+    def balancedStringSplit(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        ret = 0
+        currentR = 0
+        currentL = 0
+        
+        for c in s:
+            if c == "R":
+                currentR += 1
+            if c == "L": 
+                currentL += 1
+            
+            if currentR != 0 and currentR == currentL:
+                ret += 1
+                currentR = 0
+                currentL = 0
+                
+        return ret
