@@ -1,0 +1,41 @@
+# You are given an integer array nums and an integer x.
+# In one operation, you can either remove the leftmost or the rightmost element from the array nums and subtract its value from x.
+# Note that this modifies the array for future operations.
+# Return the minimum number of operations to reduce x to exactly 0 if it is possible, otherwise, return -1.
+class Solution(object):
+    def minOperations(self, nums, x):
+        """
+        :type nums: List[int]
+        :type x: int
+        :rtype: int
+        """
+        
+        target = sum(nums) - x
+        
+        if target == 0:
+            return len(nums)
+        
+        if target < 0:
+            return -1
+        
+        numsLen = len(nums)
+        
+        j = 0
+        res = -1
+        
+        currentSum = 0
+        
+        for i in range(numsLen):
+            currentSum += nums[i]
+            
+            while currentSum > target:
+                currentSum -= nums[j]
+                j += 1
+            
+            if currentSum == target:
+                res = max(i - j + 1, res)
+                
+        if res == -1:
+            return -1
+        
+        return numsLen - res
