@@ -1,0 +1,35 @@
+/**
+ * Given an integer array nums and an integer val, remove all occurrences of val in nums in-place.
+ * The relative order of the elements may be changed.
+ * @param {number[]} nums
+ * @param {number} val
+ * @return {number}
+ */
+var removeElement = function(nums, val) {
+    k = 0;
+    len = nums.length;
+    for(let i = 0; i < len; i++) {
+        if(nums[i] != val) {
+            k++;
+        }
+    }
+    
+    left = 0;
+    right = len - 1;
+    
+    while(left != k) {
+        if(nums[left] != val) {
+            left++;
+            continue;
+        }
+        while(nums[right] == val) {
+            right--;
+        }
+        
+        nums[left] = nums[right];
+        left++;
+        right--;
+    }
+    
+    return k;
+};
